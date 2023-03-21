@@ -1,0 +1,13 @@
+# Django
+django-environ
+Pillow
+channels[daphne]
+django-celery-results
+django-celery-beat
+django-redis
+djangorestframework
+django-filter
+markdown
+djangorestframework-simplejwt
+drf-spectacular
+django-cors-headers

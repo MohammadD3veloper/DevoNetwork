@@ -1,0 +1,6 @@
+-r base.txt
+
+psycopg2
+django-prometheus
+gunicorn
+django-compressor
