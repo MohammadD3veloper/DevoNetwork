@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 )
 
 from core.models import BaseModel
+from core.jwt import generate_token_for_user, set_token_to_blacklist
 
 from .managers import UserManager
 
@@ -26,6 +27,14 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return str(self.email)
+
+    def generate_token(self):
+        """ Generating token for user """
+        return generate_token_for_user(self)
+
+    def logout_user(self, token):
+        """ Set their token in blacklist """
+        return set_token_to_blacklist(token)
 
 
 class UserImages(BaseModel):

@@ -20,6 +20,8 @@ SECRET_KEY = env("SECRET_KEY")
 # website domain name
 DOMAIN_NAME = env("DOMAIN_NAME")
 
+# Admins
+ADMINS = env("ADMINS")
 
 # DEBUG
 DEBUG = True
@@ -37,6 +39,7 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "drf_spectacular",
     "corsheaders",
     "django_prometheus",
@@ -163,6 +166,7 @@ REST_FRAMEWORK = {
 
 
 # You can remove the files from settings if you dont need them.
+from config.settings.jwt import *
 from config.settings.celery import *
 from config.settings.email import *
 from config.settings.prometheus import *
