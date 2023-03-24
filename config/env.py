@@ -1,17 +1,11 @@
-from django.conf import settings
-
-from pathlib import Path
-
 import environ
 import os
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = environ.Path(__file__) - 2
 
 
 env = environ.Env()
 
-if settings.DEBUG:
-    env.read_env(BASE_DIR / '.env/.local.env')
-else:
-    env.read_env(BASE_DIR / '.env/.production.env')
+
+env.read_env(os.path.join(BASE_DIR, '.env/.local.env'))

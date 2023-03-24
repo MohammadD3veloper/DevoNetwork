@@ -5,7 +5,12 @@ import string
 def generate_group_address():
     """ Generate random ascii string """
     # TODO: Generate random ascii string
-    ...
+    items = string.ascii_lowercase + string.ascii_uppercase + '-_+=@'
+    address = ''.join(
+        random.choice(items) for i in range(0, 24)
+    )
+    print(address)
+    return address
 
 
 def generate_otp_code():

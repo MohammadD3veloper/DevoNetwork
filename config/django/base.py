@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from pathlib import Path
 from config.env import BASE_DIR, env
+import os
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -28,8 +28,8 @@ DEBUG = True
 
 # Application definition
 LOCAL_APPS = [
-    "devo_network.accounts.apps.AccountsConfig",
-    "devo_network.blog.apps.BlogConfig",
+    "devo_network.authentication.apps.AuthenticationConfig",
+    "devo_network.chat.apps.ChatConfig",
     "devo_network.core.apps.CoreConfig",
     "devo_network.utils.apps.UtilsConfig",
 ]
@@ -97,6 +97,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
 
+AUTH_USER_MODEL = 'authentication.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -135,7 +136,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = 'static/'
 
 STATICFILES_DIR = [
-    BASE_DIR / 'static/'
+    os.path.join(BASE_DIR, 'static/')
 ]
 
 

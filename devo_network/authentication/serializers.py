@@ -4,8 +4,8 @@ from rest_framework import serializers
 
 class LoginSerializer(serializers.Serializer):
     """ Serializer for users login """
-    username = serializers.CharField()
-    passworod = serializers.CharField()
+    email = serializers.EmailField()
+    password = serializers.CharField()
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -17,6 +17,7 @@ class RegisterSerializer(serializers.Serializer):
 
 class VerifySerializer(serializers.Serializer):
     """ Serializer for verify users registration """
+    email = serializers.EmailField()
     code = serializers.CharField()
 
 
@@ -56,7 +57,7 @@ class ChangePasswordSerializer(serializers.Serializer):
         raise serializers.ValidationError("Please fill all of fields")
 
 
-class UpdateSerializer(serializers.ModelSerializer):
+class UpdateSerializer(serializers.Serializer):
     """ Serializer for users update profile """
     username = serializers.CharField()
     first_name = serializers.CharField()
@@ -80,5 +81,5 @@ class GetUserSerializer(serializers.ModelSerializer):
 
 class TokenSerializer(serializers.Serializer):
     """ Token Serializer """
-    refresh_token = serializers.CharField()
-    access_token = serializers.CharField()
+    refresh = serializers.CharField()
+    access = serializers.CharField()

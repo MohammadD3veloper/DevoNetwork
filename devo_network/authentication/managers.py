@@ -1,10 +1,9 @@
 from django.contrib.auth.models import BaseUserManager
 
-
 class UserManager(BaseUserManager):
     """ Manager for create user & superuser """
 
-    def _create_user(self, email, password=None, **extra_fields):
+    def _create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("Every user should have an email.")
 
@@ -15,17 +14,16 @@ class UserManager(BaseUserManager):
             **extra_fields
         )
 
-        user.full_clean()
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, password, **extra_fields):
         extra_fields.setdefault("is_superuser", False)
         extra_fields.setdefault("is_active", False)
         return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
 

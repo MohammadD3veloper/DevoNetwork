@@ -19,11 +19,15 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 
 
 urlpatterns = [
-    path('devo_network/SecurePanel/ui/', admin.site.urls),
+    path('devonetwork/SecurePanel/ui/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI:
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'),
+                                                                        name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('api-auth/', include('rest_framework.urls')),
-    path('prometheus/', include('django_prometheus.urls')),    
+    path('prometheus/', include('django_prometheus.urls')),
+    path('api/', include([
+        path('auth/', include('devo_network.authentication.urls')),
+        path('chat/', include('devo_network.chat.urls'))
+    ])),
 ]

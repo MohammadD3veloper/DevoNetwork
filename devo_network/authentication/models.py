@@ -1,32 +1,43 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.validators import ASCIIUsernameValidator
+from django.core.validators import EmailValidator
 from django.contrib.auth.models import (
     AbstractBaseUser, PermissionsMixin
 )
 
-from core.models import BaseModel
-from core.jwt import generate_token_for_user, set_token_to_blacklist
+from django_prometheus.models import ExportModelOperationsMixin
+
+from devo_network.core.models import BaseModel
+from devo_network.core.jwt import generate_token_for_user, set_token_to_blacklist
 
 from .managers import UserManager
 
 
 # Create your models here.
-class User(BaseModel, AbstractBaseUser, PermissionsMixin):
+class User(ExportModelOperationsMixin('User'), BaseModel, AbstractBaseUser, PermissionsMixin):
     """ User model object for storing user informations """
 
-    username = models.CharField()
-    email = models.EmailField()
-    about = models.TextField()
-    first_name = models.CharField()
-    last_name = models.CharField()
+    username = models.CharField(max_length=40, null=True, db_index=1,
+                                blank=True, validators=[ASCIIUsernameValidator])
+    email = models.EmailField(max_length=150,
+                                unique=True, validators=[EmailValidator])
+    about = models.TextField(max_length=150, null=True, blank=True)
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
-    objects = UserManager
+    objects = UserManager()
 
-    USERNAME_FIELD = ('email', )
-    REQUIRED_FIELDS = ('email', )
+    USERNAME_FIELD = 'email'
 
     def __str__(self):
         return str(self.email)
+
+    @property
+    def is_staff(self):
+        return self.is_superuser
 
     def generate_token(self):
         """ Generating token for user """
@@ -37,7 +48,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         return set_token_to_blacklist(token)
 
 
-class UserImages(BaseModel):
+class UserImages(ExportModelOperationsMixin('UserImages'), BaseModel):
     """ UserImages model for storing user profile photos """
 
     def user_image_upload_path(self, filename):
@@ -52,7 +63,7 @@ class UserImages(BaseModel):
         return str(self.user)
 
 
-class UserContacts(BaseModel):
+class UserContacts(ExportModelOperationsMixin('UserContacts'), BaseModel):
     """ UserContacts model for storing users contacts """
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
