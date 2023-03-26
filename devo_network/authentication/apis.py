@@ -7,11 +7,17 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from drf_spectacular.utils import extend_schema
 
 from django.core.cache import cache
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
+
+from devo_network.core.tokens import one_time_token_generator
 
 from devo_network.utils.randoms import generate_otp_code
-from devo_network.utils.tasks import email_sender_otp
+from devo_network.utils.tasks import (
+    email_sender_otp,
+    reset_password_email
+)
 
-from devo_network.core.decorators import get_serializer
 
 from .selectors import Selector
 from .services import Service
@@ -58,9 +64,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
             print(user)
             if user:
                 gen_token = user.generate_token()
-                print(gen_token)
                 output_serializer = TokenSerializer(gen_token)
-                print(output_serializer)
                 return Response(output_serializer.data, status=status.HTTP_200_OK)
 
 
@@ -100,15 +104,33 @@ class AuthenticationViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['POST'], serializer_class=ResetPasswordSerializer)
     def reset_password(self, request):
         input_serializer = self.serializers_classes[self.action](data=request.data)
-        # TODO: not completed
+        if input_serializer.is_valid(raise_exception=True):
+            email = input_serializer.validated_date.get('email')
+            link = one_time_token_generator.make_token(
+                user=Selector.get_user_by_email(email)
+            )
+            reset_password_email(email, link)
+            output_serializer = GetUserSerializer(Selector.get_user_by_email(email))
+            return Response(output_serializer.data, status=status.HTTP_200_OK)
 
 
     @extend_schema(request=VerifyPasswordSerializer,
-                                responses=GetUserSerializer, methods=['POST'])
-    @action(detail=False, methods=['POST'], serializer_class=VerifyPasswordSerializer)
-    def verify_password(self, request):
-        input_serializer = self.serializers_classes[self.action](data=request.data)
-        # TODO: not completed
+                                responses=GetUserSerializer, methods=['GET'])
+    @action(detail=False, methods=['GET'], serializer_class=VerifyPasswordSerializer)
+    def verify_password(self, request, uidb64, token):
+        password = request.query_params.get('password')
+        password_confirm = request.query_params.get('password_confirm')
+        if password == password_confirm:
+            user_id = force_str(urlsafe_base64_decode(uidb64))
+            user = Selector.get_user_info(primary_key=user_id)
+            data = {
+                "success": "your password changed successfully"
+            }
+            if user:
+                return Response(data=data, status=status.HTTP_200_OK)
+            return Response({'error': 'Not Found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'Passwords dont match'}, status=status.HTTP_200_OK)
+
 
     @extend_schema(request=ChangePasswordSerializer,
                                 responses=GetUserSerializer, methods=['PUT'])

@@ -171,3 +171,4 @@ from config.settings.jwt import *
 from config.settings.celery import *
 from config.settings.email import *
 from config.settings.prometheus import *
+from config.settings.channels import *

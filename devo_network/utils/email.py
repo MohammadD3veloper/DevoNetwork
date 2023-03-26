@@ -19,3 +19,17 @@ def send_mail_otp(email_address, otp):
     """
     return send_mail(subject=subject, message='', html_message=message,
                 from_email=settings.FROM_EMAIL_ADDRESS, recipient_list=[email_address])
+
+
+def reset_password_email(email_address, otp):
+    """ Send reset password code to given email address """
+    subject = "Devonetwork Reset Password"
+    message = f"""
+    Hello dear {email_address}, this is a reset password email
+    your reset password code:
+    <b>{otp}</b>
+
+    thank you for choosing us.
+    """
+    return send_mail(subject=subject, message='', html_message=message,
+                from_email=settings.FROM_EMAIL_ADDRESS, recipient_list=[email_address])

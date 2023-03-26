@@ -2,6 +2,7 @@
 django-environ
 Pillow
 channels[daphne]
+channels-redis
 django-celery-results
 django-celery-beat
 django-redis

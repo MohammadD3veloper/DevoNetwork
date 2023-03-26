@@ -6,7 +6,7 @@ DEBUG = False
 
 
 # Allowed hosts (Set your domain here)
-ALLOWED_HOSTS = [DOMAIN_NAME, f"www.{DOMAIN_NAME}"]
+ALLOWED_HOSTS = [DOMAIN_NAME, f"www.{DOMAIN_NAME}", '127.0.0.1', 'localhost']
 # Database with postgresql
 DATABASES = {
     'default': {

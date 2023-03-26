@@ -1,0 +1,694 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/auth/change_password/:
+    put:
+      operationId: auth_change_password_update
+      description: ViewSet for authentication
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/get_me/:
+    get:
+      operationId: auth_get_me_retrieve
+      description: ViewSet for authentication
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/get_users/:
+    get:
+      operationId: auth_get_users_retrieve
+      description: ViewSet for authentication
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/login/:
+    post:
+      operationId: auth_login_create
+      description: ViewSet for authentication
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: ''
+  /api/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      description: ViewSet for authentication
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      description: ViewSet for authentication
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/reset_password/:
+    post:
+      operationId: auth_reset_password_create
+      description: ViewSet for authentication
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/update_profile/:
+    put:
+      operationId: auth_update_profile_update
+      description: ViewSet for authentication
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Update'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Update'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Update'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/verify/:
+    post:
+      operationId: auth_verify_create
+      description: ViewSet for authentication
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Verify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Verify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Verify'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/auth/verify_password/:
+    get:
+      operationId: auth_verify_password_retrieve
+      description: ViewSet for authentication
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUser'
+          description: ''
+  /api/chat/:
+    post:
+      operationId: chat_create
+      description: Chat application endpoints
+      tags:
+      - chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chat'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Chat'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Chat'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+          description: ''
+  /api/chat/{id}/:
+    get:
+      operationId: chat_retrieve
+      description: Chat application endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - chat
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+          description: ''
+    put:
+      operationId: chat_update
+      description: Chat application endpoints
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chat'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Chat'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Chat'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chat'
+          description: ''
+  /api/schema:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/tokens/obtain/:
+    post:
+      operationId: tokens_obtain_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/tokens/refresh/:
+    post:
+      operationId: tokens_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+components:
+  schemas:
+    ChangePassword:
+      type: object
+      description: Serializer for users change password
+      properties:
+        old_password:
+          type: string
+        new_password:
+          type: string
+        confirm_new_password:
+          type: string
+      required:
+      - confirm_new_password
+      - new_password
+      - old_password
+    Chat:
+      type: object
+      description: |-
+        Chat serializer for serializing
+        incoming/outgoing chat json objects
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        about:
+          type: string
+          maxLength: 200
+        image:
+          type: string
+          format: uri
+          nullable: true
+      required:
+      - about
+      - title
+    GetUser:
+      type: object
+      description: Serializer for get information about user
+      properties:
+        username:
+          type: string
+          nullable: true
+          maxLength: 40
+        email:
+          type: string
+          format: email
+          maxLength: 150
+        about:
+          type: string
+          nullable: true
+          maxLength: 150
+        first_name:
+          type: string
+          nullable: true
+          maxLength: 100
+        last_name:
+          type: string
+          nullable: true
+          maxLength: 100
+      required:
+      - email
+    Login:
+      type: object
+      description: Serializer for users login
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+      - email
+      - password
+    Register:
+      type: object
+      description: Serializer for users registration
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        confirm_passworod:
+          type: string
+      required:
+      - confirm_passworod
+      - email
+      - password
+    ResetPassword:
+      type: object
+      description: Serializer for users reset password
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    Token:
+      type: object
+      description: Token Serializer
+      properties:
+        refresh:
+          type: string
+        access:
+          type: string
+      required:
+      - access
+      - refresh
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    Update:
+      type: object
+      description: Serializer for users update profile
+      properties:
+        username:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        about:
+          type: string
+        image:
+          type: string
+          format: uri
+      required:
+      - about
+      - first_name
+      - image
+      - last_name
+      - username
+    Verify:
+      type: object
+      description: Serializer for verify users registration
+      properties:
+        email:
+          type: string
+          format: email
+        code:
+          type: string
+      required:
+      - code
+      - email
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

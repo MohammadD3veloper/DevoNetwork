@@ -21,6 +21,11 @@ class AuthenticationSelector:
         user.save()
         return user
 
+    def get_user_by_email(self, email):
+        """ Get user by email address """
+        user = get_object_or_404(self.model, email=email)
+        return user
+
     def get_user_info(self, primary_key):
         """ get user by pk """
         user = get_object_or_404(self.model, pk=primary_key)

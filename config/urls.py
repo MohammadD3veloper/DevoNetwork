@@ -16,18 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 urlpatterns = [
     path('devonetwork/SecurePanel/ui/', admin.site.urls),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'),
-                                                                        name='swagger-ui'),
-    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-    path('api-auth/', include('rest_framework.urls')),
     path('prometheus/', include('django_prometheus.urls')),
+    path('api/schema', include([
+        path('', SpectacularAPIView.as_view(), name='schema'),
+        path('swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+        path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    ])),
     path('api/', include([
         path('auth/', include('devo_network.authentication.urls')),
         path('chat/', include('devo_network.chat.urls'))
     ])),
+    path('api/tokens/', include([
+        path('obtain/', TokenObtainPairView.as_view(), name="token_obtain"),
+        path('refresh/', TokenRefreshView.as_view(), name="refresh"),
+    ]))
 ]
